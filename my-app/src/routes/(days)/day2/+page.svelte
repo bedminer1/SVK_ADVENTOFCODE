@@ -103,10 +103,13 @@ Game 100: 4 blue, 14 red; 12 red, 1 blue; 2 red, 2 blue; 8 red; 14 red, 2 blue, 
     let count = 0
     
     for (let index in strArr) {
-        let validGame = true
         const game = strArr[index]
         const setArr = game.split(':')[1].split(';')
         const numbers = new Set(['1','2','3','4','5','6','7','8','9','0'])
+
+        let greenMax = 0
+        let blueMax = 0
+        let redMax = 0
 
         // check for over
         for (let set of setArr) {
@@ -120,16 +123,22 @@ Game 100: 4 blue, 14 red; 12 red, 1 blue; 2 red, 2 blue; 8 red; 14 red, 2 blue, 
                         cubeNumber += c
                 }
 
-                if (cube.includes('blue') && Number(cubeNumber) > 14) 
-                    validGame = false
-                if (cube.includes('green') && Number(cubeNumber) > 13) 
-                    validGame = false
-                if (cube.includes('red') && Number(cubeNumber) > 12) 
-                    validGame = false
+                if (cube.includes('blue')) {
+                    blueMax = Math.max(Number(cubeNumber), blueMax)
+                }
+
+                if (cube.includes('green')) {
+                    greenMax = Math.max(Number(cubeNumber), greenMax)
+                }
+
+                if (cube.includes('red')) {
+                    redMax = Math.max(Number(cubeNumber), redMax)
+                }
+
             }
         }
 
-        if (validGame === true) count += Number(index) + 1
+        count += redMax * greenMax * blueMax
     }
 </script>
 
